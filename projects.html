@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects | Jhon Reyes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --morado: #7c3aed;
+      --morado-suave: rgba(124, 58, 237, 0.12);
+      --fondo: #0a0a0f;
+      --fondo-tarjeta: #111118;
+      --texto: #e8e4f0;
+      --texto-opaco: #9d9aaa;
+      --texto-dim: #6b6880;
+      --borde: rgba(255,255,255,0.08);
+    }
+
+    body {
+      font-family: 'Syne', Arial, sans-serif;
+      background-color: var(--fondo);
+      color: var(--texto);
+      min-height: 100vh;
+    }
+
+    a { color: var(--morado); text-decoration: none; }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 48px;
+      border-bottom: 1px solid var(--borde);
+      background: rgba(10,10,15,0.95);
+      position: sticky;
+      top: 0;
+      z-index: 99;
+    }
+
+    .logo {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      color: var(--texto);
+    }
+
+    .logo span { color: var(--morado); }
+
+    .nav-links { display: flex; gap: 28px; }
+
+    .nav-links a {
+      font-size: 13px;
+      color: var(--texto-opaco);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--texto); }
+
+    .nav-links a.active {
+      position: relative;
+    }
+
+    .nav-links a.active::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0; right: 0;
+      height: 2px;
+      background: var(--morado);
+      border-radius: 2px;
+    }
+
+    .page-header {
+      padding: 64px 48px 40px;
+      border-bottom: 1px solid var(--borde);
+    }
+
+    .etiqueta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--texto-dim);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 14px;
+    }
+
+    .page-header h1 {
+      font-size: clamp(36px, 5vw, 56px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+    }
+
+    .page-header h1 span { color: var(--morado); }
+
+    .page-header p {
+      font-size: 16px;
+      color: var(--texto-opaco);
+    }
+
+    .seccion {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 56px 48px;
+    }
+
+    /* Proyecto destacado */
+    .proyecto-grande {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: var(--fondo-tarjeta);
+      border: 1px solid var(--borde);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 24px;
+      transition: border-color 0.25s;
+    }
+
+    .proyecto-grande:hover {
+      border-color: rgba(124,58,237,0.4);
+    }
+
+    .proyecto-grande .thumb {
+      position: relative;
+      min-height: 280px;
+      background: #16161f;
+      overflow: hidden;
+    }
+
+    .proyecto-grande .thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      position: absolute;
+      top: 0; left: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .proyecto-grande .thumb .img-static { opacity: 1; z-index: 1; }
+    .proyecto-grande .thumb .img-gif    { opacity: 0; z-index: 2; }
+
+    .proyecto-grande:hover .thumb .img-static { opacity: 0; }
+    .proyecto-grande:hover .thumb .img-gif    { opacity: 1; }
+
+    .hover-hint {
+      position: absolute;
+      bottom: 12px; left: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: rgba(255,255,255,0.5);
+      background: rgba(0,0,0,0.6);
+      padding: 4px 9px;
+      border-radius: 4px;
+      z-index: 3;
+      transition: opacity 0.3s;
+    }
+
+    .proyecto-grande:hover .hover-hint { opacity: 0; }
+
+    .plataforma {
+      position: absolute;
+      top: 12px; right: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      background: rgba(0,0,0,0.7);
+      color: var(--texto-opaco);
+      padding: 4px 9px;
+      border-radius: 4px;
+      border: 1px solid var(--borde);
+    }
+
+    .proyecto-grande .cuerpo {
+      padding: 32px 36px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 14px;
+    }
+
+    .meta {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .rol {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--morado);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .tipo {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--texto-dim);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .proyecto-grande h2 {
+      font-size: 22px;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+
+    .proyecto-grande .desc {
+      font-size: 14px;
+      color: var(--texto-opaco);
+      line-height: 1.7;
+    }
+
+    .lista-cosas {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .lista-cosas li {
+      font-size: 13px;
+      color: var(--texto-opaco);
+      padding-left: 16px;
+      position: relative;
+    }
+
+    .lista-cosas li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--morado);
+      font-size: 11px;
+    }
+
+    .tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--texto-opaco);
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--borde);
+      padding: 3px 9px;
+      border-radius: 4px;
+    }
+
+    .btn {
+      display: inline-block;
+      background: var(--morado);
+      color: white;
+      padding: 11px 22px;
+      border-radius: 6px;
+      font-family: 'Syne', Arial, sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      transition: background 0.2s, transform 0.2s;
+      align-self: flex-start;
+    }
+
+    .btn:hover {
+      background: #6d28d9;
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    /* Grid de proyectos menores */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .tarjeta {
+      background: var(--fondo-tarjeta);
+      border: 1px solid var(--borde);
+      border-radius: 10px;
+      overflow: hidden;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+
+    .tarjeta:hover {
+      border-color: rgba(124,58,237,0.4);
+      transform: translateY(-4px);
+    }
+
+    .tarjeta .thumb-small {
+      position: relative;
+      height: 160px;
+      background: #16161f;
+      overflow: hidden;
+    }
+
+    .tarjeta .thumb-small img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      position: absolute;
+      top: 0; left: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .tarjeta .thumb-small .img-static { opacity: 1; z-index: 1; }
+    .tarjeta .thumb-small .img-gif    { opacity: 0; z-index: 2; }
+    .tarjeta:hover .thumb-small .img-static { opacity: 0; }
+    .tarjeta:hover .thumb-small .img-gif    { opacity: 1; }
+
+    .tarjeta .thumb-small .hover-hint {
+      position: absolute;
+      bottom: 8px; left: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: rgba(255,255,255,0.5);
+      background: rgba(0,0,0,0.6);
+      padding: 3px 8px;
+      border-radius: 4px;
+      z-index: 3;
+      transition: opacity 0.3s;
+    }
+
+    .tarjeta:hover .thumb-small .hover-hint { opacity: 0; }
+
+    .tarjeta-body { padding: 18px 20px; }
+
+    .tarjeta h3 {
+      font-size: 17px;
+      font-weight: 700;
+      margin: 8px 0;
+    }
+
+    .tarjeta .desc {
+      font-size: 13px;
+      color: var(--texto-opaco);
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+
+    .enlace {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--morado);
+      display: inline-block;
+      margin-top: 14px;
+      transition: opacity 0.2s;
+    }
+
+    .enlace:hover { opacity: 0.7; }
+
+    footer {
+      border-top: 1px solid var(--borde);
+      padding: 24px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    .footer-texto {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--texto-dim);
+    }
+
+    .footer-links { display: flex; gap: 20px; }
+
+    .footer-links a {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--texto-dim);
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--texto-opaco); }
+
+    @media (max-width: 768px) {
+      nav { padding: 16px 20px; }
+      .nav-links { gap: 16px; }
+      .page-header { padding: 48px 20px 32px; }
+      .seccion { padding: 40px 20px; }
+      .proyecto-grande { grid-template-columns: 1fr; }
+      .proyecto-grande .thumb { min-height: 200px; }
+      footer { flex-direction: column; gap: 12px; padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <span class="logo">KairosNova<span>.exe</span></span>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="projects.html" class="active">Projects</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </nav>
+
+  <div class="page-header">
+    <span class="etiqueta">My work</span>
+    <h1>Projects</h1>
+    <p>Games I've built — solo and with teams.</p>
+  </div>
+
+  <section class="seccion">
+
+    <!-- DROPPY — proyecto destacado -->
+    <div class="proyecto-grande">
+      <div class="thumb">
+        <img class="img-static" src="assets/images/projects/droppy-banner.png" alt="Droppy"
+          onerror="this.style.display='none'">
+        <img class="img-gif" src="assets/images/projects/droppy-gif.gif" alt="Droppy gameplay"
+          onerror="this.style.display='none'">
+        <span class="hover-hint">hover to preview</span>
+        <span class="plataforma">itch.io</span>
+      </div>
+      <div class="cuerpo">
+        <div class="meta">
+          <span class="rol">Lead Programmer</span>
+          <span class="tipo">· Game Jam</span>
+        </div>
+        <h2>Droppy: En busca del mar</h2>
+        <p class="desc">
+          Obstacle avoidance game created during the Limited Capacity Game Jam
+          with Aquapixel Studios. Droppy loses health over time while trying to reach the ocean.
+        </p>
+        <ul class="lista-cosas">
+          <li>Player movement system</li>
+          <li>Health drain mechanic</li>
+          <li>Player size system</li>
+          <li>Core gameplay implementation</li>
+        </ul>
+        <div class="tags">
+          <span class="tag">Unity</span>
+          <span class="tag">C#</span>
+          <span class="tag">Game Jam</span>
+          <span class="tag">Team</span>
+        </div>
+        <a href="https://renebarrera.itch.io/droppy-en-busca-del-mar" target="_blank" class="btn">
+          Play on itch.io ↗
+        </a>
+      </div>
+    </div>
+
+    <!-- SURVIVE y NOM NOM WACK -->
+    <div class="grid">
+
+      <div class="tarjeta">
+        <div class="thumb-small">
+          <img class="img-static" src="assets/images/projects/survive.png" alt="Survive"
+            onerror="this.style.display='none'">
+          <img class="img-gif" src="assets/images/projects/survive.gif" alt="Survive gameplay"
+            onerror="this.style.display='none'">
+          <span class="hover-hint">hover to preview</span>
+        </div>
+        <div class="tarjeta-body">
+          <div class="meta">
+            <span class="rol">Solo Developer</span>
+            <span class="tipo">· Endless</span>
+          </div>
+          <h3>Survive</h3>
+          <p class="desc">
+            Endless survival game where the player endures waves while collecting power-ups.
+          </p>
+          <ul class="lista-cosas">
+            <li>Full gameplay programming</li>
+            <li>Wave system</li>
+            <li>Power-up system</li>
+          </ul>
+          <div class="tags" style="margin-top: 12px;">
+            <span class="tag">Unity</span>
+            <span class="tag">C#</span>
+            <span class="tag">Solo</span>
+          </div>
+          <a href="https://kairosnova.itch.io/survive" target="_blank" class="enlace">
+            Play on itch.io ↗
+          </a>
+        </div>
+      </div>
+
+      <div class="tarjeta">
+        <div class="thumb-small">
+          <img class="img-static" src="assets/images/projects/nomnomwack.png" alt="Nom Nom Wack"
+            onerror="this.style.display='none'">
+          <img class="img-gif" src="assets/images/projects/nomnomwack.gif" alt="Nom Nom Wack gameplay"
+            onerror="this.style.display='none'">
+          <span class="hover-hint">hover to preview</span>
+        </div>
+        <div class="tarjeta-body">
+          <div class="meta">
+            <span class="rol">Solo Developer</span>
+            <span class="tipo">· Arcade</span>
+          </div>
+          <h3>Nom Nom Wack!</h3>
+          <p class="desc">
+            Whack-a-Mole arcade game. Gain points hitting food, avoid skulls that end the game instantly.
+          </p>
+          <ul class="lista-cosas">
+            <li>Object spawn system</li>
+            <li>Score & difficulty system</li>
+            <li>Instant lose mechanic</li>
+          </ul>
+          <div class="tags" style="margin-top: 12px;">
+            <span class="tag">Unity</span>
+            <span class="tag">C#</span>
+            <span class="tag">Solo</span>
+          </div>
+          <a href="https://kairosnova.itch.io/nom-nom-wack" target="_blank" class="enlace">
+            Play in browser ↗
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <span class="footer-texto"> 2026 Jhon Reyes · KairosNova</span>
+    <div class="footer-links">
+      <a href="https://github.com/KairosNova" target="_blank">GitHub</a>
+      <a href="https://kairosnova.itch.io" target="_blank">itch.io</a>
+      <a href="www.linkedin.com/in/jhon-reyes-gamedev" target="_blank">LinkedIn</a>
+    </div>
+  </footer>
+
+</body>
+</html>
+</html>
