@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jhon Reyes | Game Developer</title>
+
+  <!-- Fuente cargada directo desde Google, no necesita archivo local -->
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* === RESET === */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    /* === COLORES Y VARIABLES === */
+    :root {
+      --morado: #7c3aed;
+      --morado-suave: rgba(124, 58, 237, 0.12);
+      --fondo: #0a0a0f;
+      --fondo-tarjeta: #111118;
+      --texto: #e8e4f0;
+      --texto-opaco: #9d9aaa;
+      --texto-dim: #6b6880;
+      --borde: rgba(255,255,255,0.08);
+    }
+
+    /* === BASE === */
+    body {
+      font-family: 'Syne', Arial, sans-serif;
+      background-color: var(--fondo);
+      color: var(--texto);
+      min-height: 100vh;
+    }
+
+    a { color: var(--morado); text-decoration: none; }
+
+    /* === NAVEGACION === */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 48px;
+      border-bottom: 1px solid var(--borde);
+      background: rgba(10,10,15,0.95);
+      position: sticky;
+      top: 0;
+      z-index: 99;
+    }
+
+    .logo {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      color: var(--texto);
+    }
+
+    .logo span { color: var(--morado); }
+
+    .nav-links { display: flex; gap: 28px; }
+
+    .nav-links a {
+      font-size: 13px;
+      color: var(--texto-opaco);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--texto); }
+
+    /* === HERO === */
+    .hero {
+      padding: 80px 48px 64px;
+      max-width: 860px;
+    }
+
+    /* Badge verde de disponibilidad */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--morado);
+      background: var(--morado-suave);
+      border: 1px solid rgba(124,58,237,0.3);
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: 28px;
+    }
+
+    .badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--morado);
+      animation: parpadeo 2s infinite;
+    }
+
+    @keyframes parpadeo {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.2; }
+    }
+
+    /* Nombre grande */
+    h1 {
+      font-size: clamp(40px, 7vw, 72px);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    h1 .acento { color: var(--morado); }
+
+    /* Alias estilo codigo */
+    .alias {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      color: var(--texto-dim);
+      margin-bottom: 20px;
+    }
+
+    .bio {
+      font-size: 17px;
+      color: var(--texto-opaco);
+      max-width: 460px;
+      line-height: 1.7;
+      margin-bottom: 32px;
+    }
+
+    /* Botones */
+    .botones { display: flex; gap: 12px; margin-bottom: 36px; }
+
+    .btn-principal {
+      background: var(--morado);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 6px;
+      font-family: 'Syne', Arial, sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      transition: background 0.2s, transform 0.2s;
+      display: inline-block;
+    }
+
+    .btn-principal:hover {
+      background: #6d28d9;
+      transform: translateY(-2px);
+      color: white;
+    }
+
+    .btn-secundario {
+      background: transparent;
+      color: var(--texto-opaco);
+      padding: 12px 24px;
+      border-radius: 6px;
+      font-family: 'Syne', Arial, sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      border: 1px solid rgba(255,255,255,0.12);
+      transition: border-color 0.2s, color 0.2s;
+      display: inline-block;
+    }
+
+    .btn-secundario:hover {
+      border-color: rgba(255,255,255,0.25);
+      color: var(--texto);
+    }
+
+    /* Stack de tecnologias */
+    .stack {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .stack-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--texto-dim);
+    }
+
+    .stack-chip {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--texto-opaco);
+      background: var(--fondo-tarjeta);
+      border: 1px solid var(--borde);
+      padding: 4px 10px;
+      border-radius: 4px;
+    }
+
+    /* === SEPARADOR DE SECCION === */
+    .seccion {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 48px 48px;
+    }
+
+    .etiqueta-seccion {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--texto-dim);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .etiqueta-seccion::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--borde);
+      max-width: 60px;
+    }
+
+    /* === GRID DE PROYECTOS === */
+    .grid-proyectos {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .tarjeta {
+      background: var(--fondo-tarjeta);
+      border: 1px solid var(--borde);
+      border-radius: 10px;
+      overflow: hidden;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+
+    .tarjeta:hover {
+      border-color: rgba(124,58,237,0.4);
+      transform: translateY(-4px);
+    }
+
+    /* Imagen de la tarjeta */
+    .tarjeta-img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      display: block;
+      background: #16161f;
+    }
+
+    /* Cuerpo de la tarjeta */
+    .tarjeta-body { padding: 18px 20px; }
+
+    .tarjeta-meta {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .rol {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--morado);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .tipo {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--texto-dim);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .tarjeta h3 {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .tarjeta p {
+      font-size: 13px;
+      color: var(--texto-opaco);
+      line-height: 1.6;
+      margin-bottom: 14px;
+    }
+
+    /* Tags */
+    .tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+
+    .tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--texto-opaco);
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--borde);
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    .enlace-proyecto {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--morado);
+      transition: opacity 0.2s;
+    }
+
+    .enlace-proyecto:hover { opacity: 0.7; }
+
+    /* === FOOTER === */
+    footer {
+      border-top: 1px solid var(--borde);
+      padding: 24px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 40px;
+    }
+
+    .footer-texto {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--texto-dim);
+    }
+
+    .footer-links { display: flex; gap: 20px; }
+
+    .footer-links a {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--texto-dim);
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--texto-opaco); }
+
+    /* === MOBILE === */
+    @media (max-width: 640px) {
+      nav { padding: 16px 20px; }
+      .nav-links { gap: 16px; }
+      .hero { padding: 48px 20px 40px; }
+      .seccion { padding: 40px 20px; }
+      .botones { flex-direction: column; }
+      footer { flex-direction: column; gap: 12px; padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVEGACION -->
+  <nav>
+    <span class="logo">KairosNova<span>.exe</span></span>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="projects.html">Projects</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero">
+
+    <div class="badge">
+      <span class="badge-dot"></span>
+      Available for collaboration
+    </div>
+
+    <h1>Jhon <span class="acento">Reyes</span></h1>
+
+    <p class="alias">// aka KairosNova · Unity Game Developer</p>
+
+    <p class="bio">
+      Gameplay programmer focused on mechanics, systems and
+      experimental gameplay in Unity and C#.
+    </p>
+
+    <div class="botones">
+      <a href="projects.html" class="btn-principal">View Projects →</a>
+      <a href="contact.html" class="btn-secundario">Get in Touch</a>
+    </div>
+
+    <div class="stack">
+      <span class="stack-label">Stack:</span>
+      <span class="stack-chip">Unity</span>
+      <span class="stack-chip">C#</span>
+      <span class="stack-chip">Game Design</span>
+    </div>
+
+  </header>
+
+  <!-- PROYECTOS -->
+  <section class="seccion">
+
+    <div class="etiqueta-seccion">Featured projects</div>
+
+    <div class="grid-proyectos">
+
+      <!-- DROPPY -->
+      <div class="tarjeta">
+        <!--
+          IMAGEN: sube droppy-banner.png a tu repo
+          y cambia la ruta de src a: assets/images/projects/droppy-banner.png
+        -->
+        <img
+          class="tarjeta-img"
+          src="assets/images/projects/droppy-banner.png"
+          alt="Droppy banner"
+          onerror="this.style.background='#1a1025';this.style.height='160px'"
+        >
+        <div class="tarjeta-body">
+          <div class="tarjeta-meta">
+            <span class="rol">Lead Programmer</span>
+            <span class="tipo">· Game Jam</span>
+          </div>
+          <h3>Droppy: En busca del mar</h3>
+          <p>Obstacle avoidance game built during Limited Capacity Game Jam with Aquapixel Studios.</p>
+          <div class="tags">
+            <span class="tag">Unity</span>
+            <span class="tag">C#</span>
+            <span class="tag">Game Jam</span>
+          </div>
+          <a href="https://renebarrera.itch.io/droppy-en-busca-del-mar" target="_blank" class="enlace-proyecto">
+            Play on itch.io ↗
+          </a>
+        </div>
+      </div>
+
+      <!-- SURVIVE -->
+      <div class="tarjeta">
+        <img
+          class="tarjeta-img"
+          src="assets/images/projects/survive.png"
+          alt="Survive"
+          onerror="this.style.background='#0f1a10';this.style.height='160px'"
+        >
+        <div class="tarjeta-body">
+          <div class="tarjeta-meta">
+            <span class="rol">Solo Developer</span>
+            <span class="tipo">· Endless</span>
+          </div>
+          <h3>Survive</h3>
+          <p>Endless survival game with wave-based enemies and power-up collection system.</p>
+          <div class="tags">
+            <span class="tag">Unity</span>
+            <span class="tag">C#</span>
+            <span class="tag">Solo</span>
+          </div>
+          <a href="https://kairosnova.itch.io/survive" target="_blank" class="enlace-proyecto">
+            Play on itch.io ↗
+          </a>
+        </div>
+      </div>
+
+      <!-- NOM NOM WACK -->
+      <div class="tarjeta">
+        <img
+          class="tarjeta-img"
+          src="assets/images/projects/nomnomwack.png"
+          alt="Nom Nom Wack"
+          onerror="this.style.background='#1a100a';this.style.height='160px'"
+        >
+        <div class="tarjeta-body">
+          <div class="tarjeta-meta">
+            <span class="rol">Solo Developer</span>
+            <span class="tipo">· Arcade</span>
+          </div>
+          <h3>Nom Nom Wack!</h3>
+          <p>Whack-a-Mole arcade game with score system, difficulty levels and instant lose mechanic.</p>
+          <div class="tags">
+            <span class="tag">Unity</span>
+            <span class="tag">C#</span>
+            <span class="tag">Arcade</span>
+          </div>
+          <a href="https://kairosnova.itch.io/nom-nom-wack" target="_blank" class="enlace-proyecto">
+            Play in browser ↗
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-texto">© 2025 Jhon Reyes · KairosNova</span>
+    <div class="footer-links">
+      <a href="https://github.com/KairosNova" target="_blank">GitHub</a>
+      <a href="https://kairosnova.itch.io" target="_blank">itch.io</a>
+    </div>
+  </footer>
+
+</body>
+</html>
