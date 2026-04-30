@@ -418,8 +418,21 @@
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-      gap: 16px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+    @media (max-width: 900px) {
+      .grid {
+         grid-template-columns: 1fr;
+      }
+    }
+    .card.featured {
+     grid-column: span 2;
+    grid-row: span 2;
+    }
+
+     .card.featured .card-thumb {
+      height: 260px;
     }
 
     .card {
@@ -535,6 +548,13 @@
       position: relative;
       display: inline-block;
     }
+    .card.featured h3 {
+     font-size: 26px;
+    }
+
+     .card.featured p {
+   font-size: 14px;
+  }
 
     .card h3::after {
       content: attr(data-text);
@@ -674,6 +694,31 @@
   <section class="seccion">
     <div class="sec-label">Featured projects</div>
     <div class="grid">
+      <div class="card featured">
+  <div class="card-thumb">
+    <img class="img-static" src="assets/images/projects/Ship.gif" alt="Ship of Despair">
+    <img class="img-gif" src="assets/images/projects/ShipGameplay.gif" alt="Ship of Despair gameplay">
+    <span class="hover-hint">hover to preview</span>
+    <span class="plataforma">Alpha</span>
+  </div>
+  <div class="card-body">
+    <div class="card-meta">
+      <span class="card-rol">Gameplay Programmer</span>
+      <span class="card-tipo">· Action / Horror</span>
+    </div>
+    <h3 data-text="Ship of Despair">Ship of Despair</h3>
+    <p>
+      Steampunk ship survival where the player fights against hostile entities while managing movement and combat under pressure.
+    </p>
+    <div class="tags">
+      <span class="tag">Unity</span>
+      <span class="tag">C#</span>
+      <span class="tag">Team</span>
+      <span class="tag">Alpha</span>
+    </div>
+    <span class="card-link">In development</span>
+  </div>
+</div>
 
       <div class="card">
         <div class="card-thumb">
@@ -795,7 +840,6 @@
 
 </body>
 </html>
-  </footer>
 
 </body>
 </html>
